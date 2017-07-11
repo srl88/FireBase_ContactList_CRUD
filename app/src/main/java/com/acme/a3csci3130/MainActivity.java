@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.FirebaseDatabase;
@@ -14,13 +15,21 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends Activity {
 
 
+    /*
+*Variables
+ */
     private ListView contactListView;
     private FirebaseListAdapter<Contact> firebaseAdapter;
 
-    @Override
+    /**
+     * Launches main activity. It uses a Listview to show all the data stored in the Firebase
+     * Databse. Inizializes all buttons for this activity
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //Get the app wide shared variables
         MyApplicationData appData = (MyApplicationData)getApplication();
@@ -29,11 +38,12 @@ public class MainActivity extends Activity {
         appData.firebaseDBInstance = FirebaseDatabase.getInstance();
         appData.firebaseReference = appData.firebaseDBInstance.getReference("contacts");
 
+
         //Get the reference to the UI contents
         contactListView = (ListView) findViewById(R.id.listView);
 
         //Set up the List View
-       firebaseAdapter = new FirebaseListAdapter<Contact>(this, Contact.class,
+        firebaseAdapter = new FirebaseListAdapter<Contact>(this, Contact.class,
                 android.R.layout.simple_list_item_1, appData.firebaseReference) {
             @Override
             protected void populateView(View v, Contact model, int position) {
@@ -52,12 +62,22 @@ public class MainActivity extends Activity {
         });
     }
 
+    /**
+     * Gets called once the user clicks on Create Contact button. It sends the user to CreateContact
+     * Activity
+     * @param v
+     */
     public void createContactButton(View v)
     {
         Intent intent=new Intent(this, CreateContactAcitivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Gets called once the user clicks on an active contact from the listview. It sends the user to the
+     * DeatlViewActivity activity
+     * @param person (Linked in the listview and stored in the database )
+     */
     private void showDetailView(Contact person)
     {
         Intent intent = new Intent(this, DetailViewActivity.class);

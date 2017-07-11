@@ -2,15 +2,44 @@
   "rules": {
     ".read": "true",
     ".write": "true",
-    "contacts": {
-            "$contact": {
-                "name": {
-                    ".validate": "newData.isString() && newData.val().length < 50"
-                },
-                "email": {
-                    ".validate": "newData.isString() && newData.val().matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$/i)"
-                }
-            }
+    "contacts":{
+      "$contact":{
+        "name":{
+          ".validate":"newData.isString()&&newData.val().length>=2 && newData.val().length<=48"
+        },
+        "number":{
+          ".validate": "newData.isString()&&newData.val().length==9"
+        },
+        "address":{
+          ".validate": "newData.isString()&&newData.val().length<50"
+        },
+        "province":{
+          ".validate": "newData.isString()&&(
+          newData.val().matches(/^NS$/)||
+            newData.val().matches(/^NB$/)||
+            newData.val().matches(/^MB$/)||
+            newData.val().matches(/^ND$/)||
+            newData.val().matches(/^NL$/)||
+            newData.val().matches(/^AB$/)||
+             newData.val().matches(/^NT$/)||
+             newData.val().matches(/^NU$/)||
+             newData.val().matches(/^ON$/)||
+             newData.val().matches(/^PE$/)||
+             newData.val().matches(/^QC$/)||
+             newData.val().matches(/^SK$/)||
+             newData.val().matches(/^YK$/)||
+             newData.val().matches(/^$/)
+          )"
+        },
+        "typeOfBussines":{
+          ".validate": "newData.isString()&&(
+          newData.val().matches(/^FISHER$/)||
+            newData.val().matches(/^DISTRIBUTOR$/)||
+            newData.val().matches(/^PROCESSOR$/)||
+            newData.val().matches(/^FISH MONGER$/)
+          )"
         }
-  }
+      }
+    }
+	}
 }
